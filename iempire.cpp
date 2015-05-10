@@ -3,22 +3,39 @@
 
 ICountry *IEmpire::getEmperialist() const
 {
-    return emperialist;
+    return _emperialist;
 }
 
 void IEmpire::setEmperialist(ICountry *value)
 {
-    emperialist = value;
+    _emperialist = value;
 }
 
 QList<ICountry *> IEmpire::getColonies() const
 {
-    return colonies;
+    return _colonies;
 }
 
 void IEmpire::setColonies(const QList<ICountry *> &value)
 {
-    colonies = value;
+    _colonies = value;
+}
+
+void IEmpire::addNewCountry(ICountry *c)
+{
+    _colonies.append(c);
+}
+
+void IEmpire::addNewCountry(QList<ICountry *> c)
+{
+    _colonies.append(c);
+}
+
+void IEmpire::startAssimilation()
+{
+    foreach(ICountry* colony, _colonies) {
+        colony->makeSimilarTo(_emperialist);
+    }
 }
 
 IEmpire::IEmpire()

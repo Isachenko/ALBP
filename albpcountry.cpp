@@ -11,6 +11,11 @@ ALBPCountry::~ALBPCountry()
 
 }
 
+ICountry *ALBPCountry::createRandom()
+{
+
+}
+
 double ALBPCountry::getFitnessValue()
 {
 
@@ -19,6 +24,11 @@ double ALBPCountry::getFitnessValue()
 void ALBPCountry::makeSimilarTo(ICountry *country)
 {
 
+
+}
+
+QString ALBPCountry::toString()
+{
 
 }
 

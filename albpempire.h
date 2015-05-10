@@ -5,6 +5,9 @@
 
 class ALBPEmpire : IEmpire
 {
+private:
+
+
 public:
     ALBPEmpire();
     ~ALBPEmpire();
@@ -13,6 +16,7 @@ public:
     virtual double getFitnessValue();
     virtual void chooseNewEmperialist();
     virtual bool colapsCondition();
+    virtual ICountry* popWorstCountry();
 };
 
 #endif // ALBPEMPIRE_H

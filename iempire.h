@@ -7,8 +7,8 @@
 class IEmpire
 {
 private:
-    ICountry *emperialist;
-    QList<ICountry*> colonies;
+    ICountry *_emperialist;
+    QList<ICountry*> _colonies;
 
 public:
     IEmpire();
@@ -24,6 +24,10 @@ public:
     virtual double getFitnessValue() = 0;
     virtual void chooseNewEmperialist() = 0;
     virtual bool colapsCondition() = 0;
+    virtual ICountry* popWorstCountry() = 0;
+    virtual void addNewCountry(ICountry* c);
+    virtual void addNewCountry(QList<ICountry*> c);
+    virtual void startAssimilation();
 };
 
 #endif // ICOLONY_H

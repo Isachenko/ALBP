@@ -8,19 +8,19 @@
 
 class IICAlgorithm
 {
-private:
+protected:
+    const int _COLONIES_COUNT = 0;
 
     QList<IEmpire*> _empires;
 
 
 public:
-    IICAlgorithm();
+    IICAlgorithm(int coloniesCount);
     ~IICAlgorithm();
 
     void run();
 
     virtual void initColonies() = 0;
-    virtual void startAssimilation() = 0;
     virtual bool stopCondition() = 0;
     virtual void imperialisticCompetition() = 0;
     virtual void startRevolutions() = 0;

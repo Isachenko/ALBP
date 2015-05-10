@@ -1,6 +1,7 @@
 #include "iicalgorithm.h"
 
-IICAlgorithm::IICAlgorithm()
+IICAlgorithm::IICAlgorithm(int coloniesCount) :
+    _COLONIES_COUNT(coloniesCount)
 {
 
 }
@@ -14,7 +15,9 @@ void IICAlgorithm::run()
 {
     initColonies();
     while (!stopCondition()) {
-        startAssimilation();
+        foreach (IEmpire* empire, _empires) {
+            empire->startAssimilation();
+        }
         startRevolutions();
         foreach (IEmpire* empire, _empires) {
             empire->chooseNewEmperialist();

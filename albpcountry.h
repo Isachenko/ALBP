@@ -3,23 +3,23 @@
 
 #include <QVector>
 #include <functional>
+#include <QString>
 
 #include "icountry.h"
 
 class ALBPCountry : ICountry
 {
 private:
-    QVector<int> _;
-
-
-    std::function<void (CodesTreeNode*)> bypass
 
 public:
     ALBPCountry();
     ~ALBPCountry();
 
+    static ICountry* createRandom();
     virtual double getFitnessValue();
     virtual void makeSimilarTo(ICountry *country);
+
+    QString toString();
 
 
 };

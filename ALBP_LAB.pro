@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     albpcountry.cpp \
     albpempire.cpp \
     albpicalgorithm.cpp \
-    albptask.cpp
+    albptask.cpp \
+    albpgraph.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -22,7 +23,8 @@ HEADERS += \
     albpcountry.h \
     albpempire.h \
     albpicalgorithm.h \
-    albptask.h
+    albptask.h \
+    albpgraph.h
 
 
 CONFIG += c++11

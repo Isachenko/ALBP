@@ -31,3 +31,8 @@ bool ALBPEmpire::colapsCondition()
 
 }
 
+ICountry* ALBPEmpire::popWorstCountry()
+{
+
+}
+
