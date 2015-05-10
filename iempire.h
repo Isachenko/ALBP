@@ -20,10 +20,10 @@ public:
     QList<ICountry *> getColonies() const;
     void setColonies(const QList<ICountry *> &value);
 
-    virtual void revolution();
-    virtual double getFitnessValue();
-    virtual void chooseNewEmperialist();
-    virtual bool colapsCondition();
+    virtual void revolution() = 0;
+    virtual double getFitnessValue() = 0;
+    virtual void chooseNewEmperialist() = 0;
+    virtual bool colapsCondition() = 0;
 };
 
 #endif // ICOLONY_H

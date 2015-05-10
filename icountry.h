@@ -1,6 +1,7 @@
 #ifndef ICOUNTRY_H
 #define ICOUNTRY_H
 
+#include <QString>
 
 class ICountry
 {

@@ -21,21 +21,6 @@ void IEmpire::setColonies(const QList<ICountry *> &value)
     colonies = value;
 }
 
-void IEmpire::revolution()
-{
-
-}
-
-double IEmpire::getFitnessValue()
-{
-
-}
-
-void IEmpire::chooseNewEmperialist()
-{
-
-}
-
 IEmpire::IEmpire()
 {
 

@@ -25,6 +25,7 @@ public:
     virtual void imperialisticCompetition() = 0;
     virtual void startRevolutions() = 0;
     virtual void colapsAndFindNewOwner(IEmpire* ) = 0;
+    virtual ICountry* getBest() = 0;
 
 };
 
