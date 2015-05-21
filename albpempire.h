@@ -2,14 +2,16 @@
 #define ALBPEMPIRE_H
 
 #include "iempire.h"
+#include "albpcountry.h"
 
-class ALBPEmpire : IEmpire
+class ALBPEmpire : public IEmpire
 {
 private:
 
 
 public:
     ALBPEmpire();
+    ALBPEmpire(ICountry *emperialist, QList<ICountry *> colonies);
     ~ALBPEmpire();
 
     virtual void revolution();

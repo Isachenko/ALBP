@@ -1,7 +1,7 @@
 #include "iicalgorithm.h"
 
 IICAlgorithm::IICAlgorithm(int coloniesCount) :
-    _COLONIES_COUNT(coloniesCount)
+    _COUNTRIES_COUNT(coloniesCount)
 {
 
 }
@@ -28,6 +28,7 @@ void IICAlgorithm::run()
                 colapsAndFindNewOwner(empire);
             }
         }
+        ++curIteration;
     }
 
 }

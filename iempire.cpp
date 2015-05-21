@@ -43,6 +43,13 @@ IEmpire::IEmpire()
 
 }
 
+IEmpire::IEmpire(ICountry *emperialist, QList<ICountry *> colonies) :
+    _emperialist(emperialist),
+    _colonies(colonies)
+{
+
+}
+
 IEmpire::~IEmpire()
 {
 

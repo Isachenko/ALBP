@@ -4,14 +4,17 @@
 #include "iicalgorithm.h"
 #include "albpempire.h"
 #include "albpcountry.h"
+#include "albpgraph.h"
 
 class ALBPICAlgorithm : public IICAlgorithm
 {
 private:
     double REVOLUTION_RATE = 0.3;
+    ALBPGraph* _graph;
+    int MAX_ITERATION_COUNT = 10000000;
 
 public:
-    ALBPICAlgorithm(int coloniesCount);
+    ALBPICAlgorithm(int coloniesCount, ALBPGraph* graph);
     ~ALBPICAlgorithm();    
 
 

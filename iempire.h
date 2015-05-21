@@ -6,12 +6,13 @@
 
 class IEmpire
 {
-private:
+protected:
     ICountry *_emperialist;
     QList<ICountry*> _colonies;
 
 public:
     IEmpire();
+    IEmpire(ICountry *emperialist, QList<ICountry*> colonies);
     ~IEmpire();
 
     ICountry *getEmperialist() const;

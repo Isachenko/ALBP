@@ -2,10 +2,13 @@
 #include <cstdlib>
 #include <QMap>
 
-ALBPICAlgorithm::ALBPICAlgorithm(int coloniesCount) :
-    IICAlgorithm(coloniesCount)
-{
+#define EMPIRES_COUNT 10
 
+ALBPICAlgorithm::ALBPICAlgorithm(int coloniesCount, ALBPGraph *graph) :
+    IICAlgorithm(coloniesCount),
+    _graph(graph)
+{
+    ALBPCountry::setGraph(graph);
 }
 
 ALBPICAlgorithm::~ALBPICAlgorithm()
@@ -15,12 +18,46 @@ ALBPICAlgorithm::~ALBPICAlgorithm()
 
 void ALBPICAlgorithm::initColonies()
 {
-    QMap<ICountry*, double> _countriesAndFitness;
-    for(int i = 0; i < _COLONIES_COUNT; ++i) {
+    QMap<ICountry*, double> countriesAndFitness;
+    for(int i = 0; i < _COUNTRIES_COUNT; ++i) {
         ICountry* country = ALBPCountry::createRandom();
-        _countriesAndFitness.insert(country, country->getFitnessValue());
+        countriesAndFitness.insert(country, country->getFitnessValue());
     }
-    //ToDO:: I'm here
+    QMap<ICountry*, double>::iterator cf;
+
+    //need to be optimized
+    QMap<ICountry*, double> emperialistsAndFitness;
+    int totlaEmpiraliststFitness = 0;
+    for(int i = 0; i < EMPIRES_COUNT; ++i) {
+        double bestFitness = -1;
+        ICountry* bestCountry = nullptr;
+        for (cf = countriesAndFitness.begin(); cf != countriesAndFitness.end(); ++cf) {
+            if (cf.value() > bestFitness) {
+                bestFitness = cf.value();
+                bestCountry = cf.key();
+            }
+        }
+        if (bestCountry) {
+            countriesAndFitness.remove(bestCountry);
+            emperialistsAndFitness.insert(bestCountry, bestFitness);
+            totlaEmpiraliststFitness += bestFitness;
+        }
+    }
+    QMap<ICountry*, double>::iterator ef = countriesAndFitness.begin();
+    for (ef = emperialistsAndFitness.begin(); ef != emperialistsAndFitness.end(); ++ef) {
+        int coloniesCount = qRound((double)countriesAndFitness.size() * ((double)ef.value() / (double)totlaEmpiraliststFitness));
+        QList<ICountry*> colonies;
+        for(int i = 0; i < coloniesCount; ++i) {
+            colonies.append(countriesAndFitness.firstKey());
+            countriesAndFitness.remove(countriesAndFitness.firstKey());
+        }
+        if ((ef + 1) == emperialistsAndFitness.end()) {
+            colonies.append(countriesAndFitness.keys());
+        }
+        _empires.append(new ALBPEmpire(ef.key(), colonies));
+    }
+
+
 
 }
 
@@ -28,15 +65,16 @@ bool ALBPICAlgorithm::stopCondition()
 {
     if (_empires.size() < 2) {
         return true;
-    } else {
-        return false;
+    } else if (curIteration >= MAX_ITERATION_COUNT){
+        return true;
     }
+    return false;
 }
 
 void ALBPICAlgorithm::imperialisticCompetition()
 {
     IEmpire* loser = nullptr;
-    QMap<IEmpire*, int> fitnessValues;
+    QMap<IEmpire*, double> fitnessValues;
 
     double maxValue = -1;
     //count fitness and find loser
@@ -46,9 +84,14 @@ void ALBPICAlgorithm::imperialisticCompetition()
         if (value > maxValue) {
             maxValue = value;
         }
-        if (fitnessValues.contains(loser) && (value < fitnessValues.value(loser))) {
+        if ((loser == nullptr) || (fitnessValues.contains(loser) && (value < fitnessValues.value(loser)))) {
             loser = epmire;
         }
+    }
+    //normalize
+    QMap<IEmpire*, double>::iterator i;
+    for(i = fitnessValues.begin(); i != fitnessValues.end(); ++i) {
+        fitnessValues.insert(i.key(), i.value() / maxValue);
     }
 
     //find winner
@@ -77,9 +120,37 @@ void ALBPICAlgorithm::startRevolutions()
 
 void ALBPICAlgorithm::colapsAndFindNewOwner(IEmpire *empire)
 {
+    //colaps
     _empires.removeOne(empire);
-    QList<ICountry*> _countries = empire->getColonies();
-    _countries.append(empire->getEmperialist());
+    QList<ICountry*> vocantCountries = empire->getColonies();
+    vocantCountries.append(empire->getEmperialist());
+    delete empire;
+
+    //find new owner
+    QMap<IEmpire*, double> empiresAndFitness;
+    double totalEmperiesFitness = 0;
+    foreach(IEmpire* empire, _empires) {
+        double fitness = empire->getFitnessValue();
+        empiresAndFitness.insert(empire, fitness);
+        totalEmperiesFitness += fitness;
+    }
+
+    QMap<IEmpire*, double>::iterator ef;
+    for(ef = empiresAndFitness.begin(); ef != empiresAndFitness.end(); ++ef) {
+        double fitness = ef.key()->getFitnessValue();
+        int coloniesCount = qRound((double)vocantCountries.size() * ((double)fitness / (double)totalEmperiesFitness));
+        QList<ICountry*> colonies;
+        for(int i = 0; i < coloniesCount; ++i) {
+            colonies.append(vocantCountries.first());
+            vocantCountries.removeFirst();
+        }
+        if ((ef + 1) == empiresAndFitness.end()) {
+            colonies.append(vocantCountries);
+        }
+        ef.key()->addNewCountry(colonies);
+    }
+
+
 }
 
 ICountry *ALBPICAlgorithm::getBest()

@@ -9,9 +9,10 @@
 class IICAlgorithm
 {
 protected:
-    const int _COLONIES_COUNT = 0;
+    const int _COUNTRIES_COUNT = 0;
 
     QList<IEmpire*> _empires;
+    int curIteration = 0;
 
 
 public:
