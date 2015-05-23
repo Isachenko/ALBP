@@ -12,7 +12,7 @@ class ALBPCountry : public ICountry
 {
 private:
     static ALBPGraph* _graph;
-    static const int _maxRuleValue = 10;
+    static const int _maxRuleValue = 4;
 
     QVector<int> _rules;
 

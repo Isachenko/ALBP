@@ -5,13 +5,16 @@
 class ALBPTask
 {
     double _time;
-    bool _isComplite;
+    int _number = 0;
 
 public:
-    ALBPTask(double time);
+    ALBPTask(double time, int number);
     ~ALBPTask();
-    bool isComplite() const;
-    void setIsComplite(bool isComplite);
+
+    double time() const;
+    void setTime(double time);
+    int number() const;
+    void setNumber(int number);
 };
 
 #endif // ALBPTASK_H

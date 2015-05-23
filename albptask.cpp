@@ -1,24 +1,35 @@
 #include "albptask.h"
 
 
-bool ALBPTask::isComplite() const
+double ALBPTask::time() const
 {
-    return _isComplite;
+    return _time;
 }
 
-void ALBPTask::setIsComplite(bool isComplite)
+void ALBPTask::setTime(double time)
 {
-    _isComplite = isComplite;
+    _time = time;
 }
-ALBPTask::ALBPTask(double time) :
-    _time(time)
-{
 
+int ALBPTask::number() const
+{
+    return _number;
+}
+
+void ALBPTask::setNumber(int number)
+{
+    _number = number;
+}
+ALBPTask::ALBPTask(double time, int number) :
+    _time(time),
+    _number(number)
+{
+    
 }
 
 ALBPTask::~ALBPTask()
 {
-
+    
 }
 
 
